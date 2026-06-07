@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Калькулятор</title>
+    <style>
+        body {
+            background-color: cadetblue;
+            font-family: Arial;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        input, button {
+            font-size: 20px;
+            padding: 10px;
+            margin: 5px;
+        }
+
+        h1 {
+            font-size: 48px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="res">0</h1>
+    
+    <input type="number" id="num1" placeholder="Число 1">
+    <input type="number" id="num2" placeholder="Число 2">
+    
+    <button id="sumBtn">+</button>
+    <button id="subBtn">-</button>
+    <button id="mulBtn">×</button>
+    <button id="divBtn">÷</button>
+    <button id="powBtn">^</button>
+
+    <script>
+        // Находим элементы
+        const res = document.getElementById("res");
+        const num1 = document.getElementById("num1");
+        const num2 = document.getElementById("num2");
+        
+        const sumBtn = document.getElementById("sumBtn");
+        const subBtn = document.getElementById("subBtn");
+        const mulBtn = document.getElementById("mulBtn");
+        const divBtn = document.getElementById("divBtn");
+        const powBtn = document.getElementById("powBtn");
+        
+        function getValues() {
+            const a = Number(num1.value);
+            const b = Number(num2.value);
+            return { a, b };
+        }
+        
+        sumBtn.addEventListener("click", function() {
+            const { a, b } = getValues();
+            res.textContent = a + b;
+        });
+        
+        subBtn.addEventListener("click", function() {
+            const { a, b } = getValues();
+            res.textContent = a - b;
+        });
+        
+        mulBtn.addEventListener("click", function() {
+            const { a, b } = getValues();
+            res.textContent = a * b;
+        });
+        
+        divBtn.addEventListener("click", function() {
+            const { a, b } = getValues();
+            if (b === 0) {
+                res.textContent = "Ошибка: на 0 нельзя";
+            } else {
+                res.textContent = a / b;
+            }
+        });
+        
+        powBtn.addEventListener("click", function() {
+            const { a, b } = getValues();
+            
+            if (a === 10 && b > 3827) {
+                res.textContent = "10^" + b + " (≈ 1e" + b + ")";
+            } else if (b > 100) {
+                const approx = (a ** Math.min(b, 10)).toExponential(3);
+                res.textContent = approx + " × 10^" + (b - 10);
+            } else {
+                res.textContent = a ** b;
+            }
+        });
+    </script>
+</body>
+</html>
